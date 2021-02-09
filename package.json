@@ -1,0 +1,23 @@
+{
+  "name": "nodejs_promises",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishitachauhan/Nodejs_promises.git"
+  },
+  "author": "ishita",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ishitachauhan/Nodejs_promises/issues"
+  },
+  "homepage": "https://github.com/ishitachauhan/Nodejs_promises#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "request": "^2.88.2"
+  }
+}
