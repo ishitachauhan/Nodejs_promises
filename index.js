@@ -1,24 +1,33 @@
-const urls = require("./server.json")
-const request = require('request')
+const urls = require("./server.json") //json file containing array of object with server and priority
 const axios = require('axios')
-    async function findServer() {
+    async function findServer(urls) {
 
         const tasks = urls.map(source => axios.get(source.url,{timeout: 5000}));
+        // Make sure that all tasks were processed before return
         const results = await Promise.allSettled(tasks);
-        results.forEach((result) => {
-            if (result.status === 'fulfilled') {
-              const { value } = result;
+        //collect all final result for online server from urls in serverArr
+        const serverArr = [];
+        for(var i=0;i<results.length;i++){
+            if (results[i].status === 'fulfilled') { //resolve when status is between 200 to 299
+                const { value } = results[i]
                 if(value.status >= 200 && value.status <= 299){
-                    for (i=0;i<urls.length;i++){
-                        console.log(urls[i].priority)
-                    }
+                    var result = urls[i]     
                 }
-            } else { // results.status === 'rejected'
-              const { reason } = result
+                // Get all online server url and priority and append them to the serverArr
+                serverArr.push(result)
+                
+                
+            } else { // results[i].status === 'rejected'
+              const { reason } = results
               // do something...
-            }
-          });
+            } 
+          }
+        console.log(serverArr)
+        //sort serverArr results on the basis of priority and return the lowest priority server with priority value
+        serverArr.sort((a, b) => Number(a.priority) - Number(b.priority));
+        var min = serverArr[0];
+        console.log(min)
+        return min
         }
+        exports.findServer = findServer(urls);
 
-       
-       findServer();
